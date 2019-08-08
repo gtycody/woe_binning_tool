@@ -15,6 +15,7 @@ import math
 def _woe_calculation(data_input, cut_num, cut_method):
     temp_df = data_input
     target_col_name = data_input.columns[0]
+    print(data_input.dtypes[0])
     
     #performing WOE for categorical characteristics
     if data_input.dtypes[0] == "object":
@@ -26,9 +27,7 @@ def _woe_calculation(data_input, cut_num, cut_method):
         
         tag_count = pd.value_counts(temp_df['tag'])
 
-        # convert value_count and tag_count to list 
-        # value count list = vcls
-        # tag count list = tcls
+        # convert value_count to list vcls
         vcls = list(value_count)
 
         for i in tag_count.index:
@@ -36,25 +35,26 @@ def _woe_calculation(data_input, cut_num, cut_method):
                 tgn = tag_count[i]
             elif i == 1:
                 tbn = tag_count[i]
-        
-        
+         
         woe_value_ls = list()
         categ_name_ls = list()
         # also record total value to calculating the woe for Nan
         # gun = good user number / bun = bad user number
 
         #***** if worng plz release all line & print*******
-        #print(value_count)
-        #print(tag_count)
-        #print("tgn: ",tgn ,"tbn", tbn)
+        print(value_count)                               
+        print(tag_count)                                 
+        #print("tgn: ",tgn ,"tbn", tbn)                   
         #**************************************************
-
         
+        gn, bn = 0,0
         #calculation woe value among different categories
         for i in range(int(len(vcls) / 2)):
-            woe_value = math.log10((vcls[2 * i] / tgn) / (vcls[2 * i + 1] / tbn))     
+            woe_value = math.log((vcls[2 * i] / tgn) / (vcls[2 * i + 1] / tbn))
+            gn += vcls[2 * i]
+            bn += vcls[2 * i + 1]     
             woe_value_ls.append(woe_value)
-
+                    
         #calculate woe value for nan category
         tmp_name = list(value_count.index)
         for i in range(int(len(vcls) / 2)):
@@ -62,9 +62,16 @@ def _woe_calculation(data_input, cut_num, cut_method):
 
         #combine two list to a dictionary which is better at changing value
         dc = dict(zip(categ_name_ls,woe_value_ls))
-        print(dc)
 
+        #Testify if the list contain Nan value, if so calculated it and add 
+        if gn < tgn and bn < tbn:
+            woe_nan = math.log10(((tgn - gn) / tgn)/((tbn - bn) / tbn ))
+            print("woe_nan: ",woe_nan)
+            dc1 = {np.nan:woe_nan}
+            dc.update(dc1)
+    
         #apply value in
+        print(dc)
         data_input[target_col_name] = data_input[target_col_name].apply(lambda x: dc[x])
         
         print(data_input)
@@ -81,41 +88,40 @@ def _woe_calculation(data_input, cut_num, cut_method):
             data_input[target_col_name] = pd.cut(data_input[target_col_name],cut_num)
 
         temp_df = data_input
-               
+        
         value_count = temp_df.groupby(by = [target_col_name,'tag'])
         value_count = value_count.size()
         
         tag_count = pd.value_counts(temp_df['tag'])
 
-        # convert value_count and tag_count to list 
-        # value count list = vcls
-        # tag count list = tcls
+        # convert value_count to list vcls
         vcls = list(value_count)
 
-        #obtain the total good num and total bad num
         for i in tag_count.index:
             if i == 0:
                 tgn = tag_count[i]
             elif i == 1:
                 tbn = tag_count[i]
-        
-        
+         
         woe_value_ls = list()
         categ_name_ls = list()
         # also record total value to calculating the woe for Nan
         # gun = good user number / bun = bad user number
 
         #***** if worng plz release all line & print*******
-        #print(value_count)
-        #print(tag_count)
-        #print("tgn: ",tgn ,"tbn", tbn)
+        print(value_count)                               
+        print(tag_count)                                 
+        #print("tgn: ",tgn ,"tbn", tbn)                   
         #**************************************************
         
+        gn, bn = 0,0
         #calculation woe value among different categories
         for i in range(int(len(vcls) / 2)):
-            woe_value = math.log10((vcls[2 * i] / tgn) / (vcls[2 * i + 1] / tbn))     
+            woe_value = math.log((vcls[2 * i] / tgn) / (vcls[2 * i + 1] / tbn))
+            gn += vcls[2 * i]
+            bn += vcls[2 * i + 1]     
             woe_value_ls.append(woe_value)
-
+                    
         #calculate woe value for nan category
         tmp_name = list(value_count.index)
         for i in range(int(len(vcls) / 2)):
@@ -123,19 +129,26 @@ def _woe_calculation(data_input, cut_num, cut_method):
 
         #combine two list to a dictionary which is better at changing value
         dc = dict(zip(categ_name_ls,woe_value_ls))
-        print(dc)
 
+        #Testify if the list contain Nan value, if so calculated it and add 
+        if gn < tgn and bn < tbn:
+            woe_nan = math.log10(((tgn - gn) / tgn)/((tbn - bn) / tbn ))
+            print("woe_nan: ",woe_nan)
+            dc1 = {np.nan:woe_nan}
+            dc.update(dc1)
+    
         #apply value in
+        print(dc)
         data_input[target_col_name] = data_input[target_col_name].apply(lambda x: dc[x])
         
         print(data_input)
         
         return data_input
-
+ 
 #def _iv_calculation():
 
-data = pd.read_csv('~/desktop/woe_binning_tool/test1.csv')
-_woe_calculation(data, 4, 1)
+data = pd.read_csv('~/desktop/woe_binning_tool/test2.csv')
+_woe_calculation(data, 4, "cut")
 
 
 
