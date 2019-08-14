@@ -42,8 +42,8 @@ def _woe_calculation(data_input, cut_num, cut_method):
         # gun = good user number / bun = bad user number
 
         #***** if worng plz release all line & print*******
-        print(value_count)                               
-        print(tag_count)                                 
+        #print(value_count)                               
+        #print(tag_count)                                 
         #print("tgn: ",tgn ,"tbn", tbn)                   
         #**************************************************
         
@@ -66,7 +66,7 @@ def _woe_calculation(data_input, cut_num, cut_method):
         #Testify if the list contain Nan value, if so calculated it and add 
         if gn < tgn and bn < tbn:
             woe_nan = math.log10(((tgn - gn) / tgn)/((tbn - bn) / tbn ))
-            print("woe_nan: ",woe_nan)
+            #print("woe_nan: ",woe_nan)
             dc1 = {np.nan:woe_nan}
             dc.update(dc1)
     
@@ -109,8 +109,8 @@ def _woe_calculation(data_input, cut_num, cut_method):
         # gun = good user number / bun = bad user number
 
         #***** if worng plz release all line & print*******
-        print(value_count)                               
-        print(tag_count)                                 
+        #print(value_count)                               
+        #print(tag_count)                                 
         #print("tgn: ",tgn ,"tbn", tbn)                   
         #**************************************************
         
@@ -133,7 +133,7 @@ def _woe_calculation(data_input, cut_num, cut_method):
         #Testify if the list contain Nan value, if so calculated it and add 
         if gn < tgn and bn < tbn:
             woe_nan = math.log10(((tgn - gn) / tgn)/((tbn - bn) / tbn ))
-            print("woe_nan: ",woe_nan)
+            #print("woe_nan: ",woe_nan)
             dc1 = {np.nan:woe_nan}
             dc.update(dc1)
     
@@ -145,11 +145,11 @@ def _woe_calculation(data_input, cut_num, cut_method):
         
         return data_input
  
-#def _iv_calculation():
+#def _iv_calculation(data_input)
+        
 
-data = pd.read_csv('~/desktop/woe_binning_tool/test2.csv')
+data = pd.read_csv('~/desktop/woe_binning_tool/test1.csv')
 _woe_calculation(data, 4, "cut")
-
 
 
 #def auto_woe_iv():
