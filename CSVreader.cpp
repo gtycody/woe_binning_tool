@@ -42,6 +42,8 @@ vector<int> getCount1(vector<float> cuts);
 //Printing function 
 void print_me(vector<float> woe_table, vector<float> cuts, float max);
 
+//change the value in a
+void swap_value(vector<float> woe_table, vector<float> cuts, float max)
 
 
 //=================================================
@@ -250,6 +252,7 @@ void print_me(vector<float> woe_table, vector<float> cuts, float max){
 }
 
 //this function get the value back to "a"
+//This function has O(4n) with 4 cuts as the default value
 void swap_value(vector<float> woe_table, vector<float> cuts, float max){
     cuts.push_back(max);
     for (int i = 0; i < a.size()-1; ++i){
