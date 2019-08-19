@@ -22,7 +22,22 @@ vector<float> b;
 inline void file_to_string(vector<string> &record, const string& line, char delimiter);
 inline float string_to_float(string str);
 inline void getCount(float count_0, float count_1);
-inline void getRange(float count_max, float count_min);
+inline float getRange(float count_max, float count_min);
+vector<float> cutit(int segments);
+
+
+//This function illustrate the way of cutting
+//please modify u self if u wanna other cutting stratagy
+vector<float> cutit(int segments, float range){
+    vector<float> cuts;
+    for(int i = 0; i < segments; ++i){
+        cuts.push_back(range / segments * i);
+        //cout<<(range /segments * i)<<"\n";
+        cout<<cuts[i]<<"\n";
+    }
+    cout<<"\n";
+    return cuts;
+}
  
 void read(string filename){
     vector<string> row;
@@ -110,7 +125,8 @@ inline void getCount(float count_0, float count_1){
     return ;
 }
 
-inline void getRange(float count_max, float count_min){
+//get range -> float range
+inline float getRange(float count_max, float count_min){
     for(int i = 0; i < a.size()-1; i++){
         if(count_max < a[i][0]){
             count_max = a[i][0];
@@ -121,20 +137,17 @@ inline void getRange(float count_max, float count_min){
     }
     cout<<"max:"<<count_max<<", min: "<<count_min<<" and range: ";
     cout<<"range: "<<count_max - count_min<<"\n";
+    return count_max-count_min;
 }
  
 //===================================================
 //              MIAN FUNCTION START
 //===================================================
 int main(){
+    int segments = 4;  //set how many segments it need
+    read("test3.csv");  //set the name of CSV u wanna process
+    cout<<"cut into: "<<segments<<"\n";
 
-
-
-
-
-    read("test3.csv");
-    cout<<"total number of data:"<<a.size();
-    cout<<"\n";
     float count_1 = 0;
     float count_0 = 0;
 
@@ -142,7 +155,8 @@ int main(){
     float count_max = numeric_limits<float>::min();
     float count_min = numeric_limits<float>::max();
     getCount(count_0, count_1);
-    getRange(count_max, count_min);
+    float range = getRange(count_max, count_min);
+    vector<float> cuts = cutit(segments, range);
     return 0;
 }
 
