@@ -7,6 +7,9 @@
 #include <limits> //since MAX and MIN num are recorded in limits
 #include <math.h> //input natural log
 //#include <Python.h> // Python portal
+#include "Reader.h"
+#include "Calculation.h"
+
 
 
 //====================================================
@@ -114,7 +117,7 @@ vector<float> cutit(int segments, float range, float min){
 }
  
 
-//CSV reading function================================================================================ 
+//CSV reading function================================================================================
 //if u have better idea plz optimize it
 void read(string filename){
     vector<string> row;
@@ -171,16 +174,18 @@ float string_to_float(string str){
     float sum = 0;
     
     while(i<len){
-        if(str[i]=='.') break;
-        sum=sum*10+str[i]-'0';
+        if(str[i] == '.'){
+            break;
+        }
+        sum = sum * 10 + str[i]- '0';
         ++i;
     }
     ++i;
-    float t=1,d=1;
+    float t = 1, d = 1;
     while(i<len){
-        d*=0.1;
-        t=str[i]-'0';
-        sum+=t*d;
+        d* = 0.1;
+        t = str[i] - '0';
+        sum += t*d;
         ++i;
     }
     return sum;
