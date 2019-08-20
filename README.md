@@ -8,3 +8,13 @@ test2.csv with a little values in it
 test3.csv with 320k * 2 datas all float
 
 ----updated 2019-08-19
+
+
+
+
+performed a sturctural change
+u could compile with command:
+g++ -O3 main.cpp Reader.cpp Calculation.cpp
+
+----updated 2019-08-20
+
