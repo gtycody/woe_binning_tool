@@ -1,15 +1,18 @@
 #include <iostream>
 #include "Calculation.h"
 
+using namespace std;
+
 //#include <vector> //required
 //#include <limits> //since MAX and MIN num are recorded in limits
 //#include <math.h> //input natural log
 
 //Constructor
-Calculation::Calculation(int seg)
+Calculation::Calculation(int seg, vector<vector<float> > input)
 {
+    a = input;
     segments = seg;  //set how many segments it need
-    cout<<"cut into: "<<segments<<"\n";
+    cout<<"Calculation start "<<"cut into: "<<segments<<"\n";
 
     // finding the range of existing datai
     max_float = numeric_limits<float>::min();
@@ -32,6 +35,7 @@ Calculation::Calculation(int seg)
     //printAll();
 
     print_me(woe_table, cuts, rangeV[0]);
+    
 }
 
 

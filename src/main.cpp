@@ -9,8 +9,8 @@ MAIN
 int main()
 {
     Reader r1("../test/test3.csv");
-    Calculation cal1(4);
+    vector<vector<float> > matrix = r1.get_matrix();
+    Calculation cal1(3,matrix);
 
     return 0;
 }
-

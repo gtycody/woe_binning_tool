@@ -34,7 +34,7 @@ class Calculation
 
     public:
         //Constructor
-        Calculation(int seg);
+        Calculation(int seg, vector<vector<float> > input);
 
         //Destructor
         //~Calculation();
