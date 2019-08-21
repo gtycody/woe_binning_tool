@@ -13,6 +13,9 @@ Reader::Reader(string str)
     read(filename);
 }
 
+
+Reader::~Reader(){}
+
 //read csv
 void Reader::read(string filename){
     vector<string> row;
@@ -35,6 +38,11 @@ void Reader::read(string filename){
     }
     in.close();
 }
+
+
+
+
+
 
 //covert file to string
 void Reader::file_to_string(vector<string> &record, const string& line, char delimiter)

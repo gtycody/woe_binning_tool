@@ -39,6 +39,11 @@ Calculation::Calculation(int seg,vector<vector<float> > input)
 }
 
 
+Calculation::~Calculation(){}
+
+
+
+
 //get 0 count
 vector<int> Calculation::getCount0(int segments, vector<float> cuts)
 {

@@ -36,8 +36,6 @@ class Calculation
         //Constructor
         Calculation(int seg, vector<vector<float> > input);
 
-        //Destructor
-        //~Calculation();
     
         //get the total count of 0/1
         int totCount0();
@@ -63,6 +61,9 @@ class Calculation
 
         //change the value in a
         void swap_value(vector<float> woe_table, vector<float> cuts, float max);
+        
+	//Destructor
+        ~Calculation();
 
 };
 #endif

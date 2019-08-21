@@ -25,7 +25,7 @@ class Reader
         Reader(string str);
         
         //Destructor
-        //~Reader();
+        ~Reader();
         
         //return matrix
         vector<vector<float> > get_matrix();
