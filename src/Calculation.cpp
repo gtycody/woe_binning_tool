@@ -8,7 +8,7 @@ using namespace std;
 //#include <math.h> //input natural log
 
 //Constructor
-Calculation::Calculation(int seg, vector<vector<float> > input)
+Calculation::Calculation(int seg,vector<vector<float> > input)
 {
     a = input;
     segments = seg;  //set how many segments it need
