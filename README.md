@@ -18,3 +18,7 @@ g++ -O3 main.cpp Reader.cpp Calculation.cpp
 
 ----updated 2019-08-20
 
+
+destructor updated 
+
+----updated 2019-08-21
