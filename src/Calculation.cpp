@@ -39,7 +39,7 @@ Calculation::Calculation(int seg,vector<vector<float> > input)
 }
 
 
-Calculation::~Calculation(){}
+//Calculation::~Calculation(){}
 
 
 

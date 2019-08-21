@@ -63,7 +63,7 @@ class Calculation
         void swap_value(vector<float> woe_table, vector<float> cuts, float max);
         
 	//Destructor
-        ~Calculation();
+        ~Calculation(){};
 
 };
 #endif

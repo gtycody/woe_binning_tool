@@ -14,7 +14,7 @@ Reader::Reader(string str)
 }
 
 
-Reader::~Reader(){}
+//Reader::~Reader(){}
 
 //read csv
 void Reader::read(string filename){
