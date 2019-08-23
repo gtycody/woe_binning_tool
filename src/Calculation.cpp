@@ -8,8 +8,13 @@ using namespace std;
 //#include <math.h> //input natural log
 
 //Constructor
-Calculation::Calculation(int seg,vector<vector<float> > input)
+Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none)
 {
+    if(contain_none):
+
+
+
+    
     a = input;
     segments = seg;  //set how many segments it need
     cout<<"Calculation start "<<"cut into: "<<segments<<"\n";
@@ -32,7 +37,7 @@ Calculation::Calculation(int seg,vector<vector<float> > input)
     
     swap_value(woe_table, cuts, rangeV[0]);
 
-    //printAll();
+    printAll();
 
     print_me(woe_table, cuts, rangeV[0]);
     

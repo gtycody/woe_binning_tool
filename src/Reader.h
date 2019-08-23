@@ -14,20 +14,28 @@ class Reader
         vector<vector<float> > matrix;
         vector<float> oneRow;
 
-        void read(string filename);
+        void read(string filenami, char delimiter);
 
         void file_to_string(vector<string> &record, const string& line, char delimiter);
+
         float string_to_float(string str);
 
+        //True means yes
+        bool contain_none;
     
     public:
+        
         //constructor
-        Reader(string str);
+        Reader(string str, char delimiter);
         
         //Destructor
         ~Reader(){};
         
         //return matrix
         vector<vector<float> > get_matrix();
+
+        bool if_contain_none();
+
+
 };
 #endif

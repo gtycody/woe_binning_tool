@@ -22,3 +22,12 @@ g++ -O3 main.cpp Reader.cpp Calculation.cpp
 destructor updated 
 
 ----updated 2019-08-21
+
+
+try to perform same process with columns which contains none
+becasue the large cost of defining a new struct, We try to swap
+Nan value in column with M_PI which is 3.14159
+And skip those unique number when performing the Calculation
+NOT YET FINISH
+
+----updated 2019-08-23
