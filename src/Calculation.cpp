@@ -10,14 +10,11 @@ using namespace std;
 //Constructor
 Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none)
 {
-    if(contain_none):
-
-
-
-    
     a = input;
     segments = seg;  //set how many segments it need
     cout<<"Calculation start "<<"cut into: "<<segments<<"\n";
+
+    none_swap = 3.14159;
 
     // finding the range of existing datai
     max_float = numeric_limits<float>::min();
@@ -26,21 +23,33 @@ Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none
     tot1 = totCount1();
     tot0 = totCount0();
 
-    rangeV = getRange(max_float, min_float);
-    range = rangeV[0]-rangeV[1];
-    cuts = cutit(segments, range, rangeV[1]);
+    if(contain_none)
+    {
+        rangeV = getRange(max_float, min_float);
+        range = rangeV[0]-rangeV[1];
+        cuts = cutit(segments, range, rangeV[1]);
 
-    c0wo = getCount0(segments,cuts);
-    c1wo = getCount1(segments,cuts);
-    woe_table = calWoe(c0wo,c1wo,tot1,tot0);
+        c0wo = getCount0(segments,cuts);
+        c1wo = getCount1(segments,cuts);
+        woe_table = calWoe(c0wo,c1wo,tot1,tot0);
+        none_woe = woe_for_none();
 
-    
+     
+    }
+    else
+    {
+        rangeV = getRange(max_float, min_float);
+        range = rangeV[0]-rangeV[1];
+        cuts = cutit(segments, range, rangeV[1]);
+
+        c0wo = getCount0(segments,cuts);
+        c1wo = getCount1(segments,cuts);
+        woe_table = calWoe(c0wo,c1wo,tot1,tot0);
+
+    }    
     swap_value(woe_table, cuts, rangeV[0]);
-
     printAll();
-
     print_me(woe_table, cuts, rangeV[0]);
-    
 }
 
 
@@ -63,7 +72,7 @@ vector<int> Calculation::getCount0(int segments, vector<float> cuts)
     {
         for(int k = 0; k < segments; ++k)
         {
-            if( (a[j][0] >= cuts[k]) && (a[j][0] <= cuts[k+1]) && (a[j][1] == 0) )
+            if( (a[j][0] >= cuts[k]) && (a[j][0] <= cuts[k+1]) && (a[j][1] == 0) && a[j][0] != none_swap)
             {   
                 ++count0wo[k]; 
                 break;
@@ -88,7 +97,7 @@ vector<int> Calculation::getCount1(int segments, vector<float> cuts)
     {
         for(int k = 0; k < segments; ++k)
         {
-            if( (a[j][0] >= cuts[k]) && (a[j][0] <= cuts[k+1]) && (a[j][1]==1))
+            if( (a[j][0] >= cuts[k]) && (a[j][0] <= cuts[k+1]) && (a[j][1]==1) && a[j][0] != none_swap)
             {   
                 ++count1wo[k]; 
                 break;
@@ -146,11 +155,11 @@ vector<float> Calculation::getRange(float max_float, float min_float)
 {
     for(int i = 0; i < a.size()-1; i++)
     {
-        if(max_float < a[i][0])
+        if(max_float < a[i][0]  && a[i][0] != none_swap)
         {
             max_float = a[i][0];
         }
-        if(min_float > a[i][0])
+        if(min_float > a[i][0] && a[i][0] != none_swap)
         {
             min_float = a[i][0];
         }
@@ -158,6 +167,7 @@ vector<float> Calculation::getRange(float max_float, float min_float)
     vector<float> vec;
     vec.push_back(max_float);
     vec.push_back(min_float);
+    cout<<"\n"<<"none_woe  "<<none_woe<<endl;
     return vec;  
 }
 
@@ -183,6 +193,12 @@ void Calculation::swap_value(vector<float> woe_table, vector<float> cuts, float 
     {
         for(int j = 0; j < woe_table.size(); ++j)
         {
+            if(a[i][0] == none_swap)
+            {
+                cout<<none_woe;
+                a[i][0] = none_woe;
+                break;
+            }
             if ((cuts[j]<=a[i][0]) && (a[i][0]<=cuts[j+1]))
             {
                 a[i][0] = woe_table[j];
@@ -213,3 +229,16 @@ void Calculation::print_me(vector<float> woe_table, vector<float> cuts, float ma
     }
 }
 
+//Calculate woe for none value 
+float Calculation::woe_for_none()
+{
+    int sum_1 = 0, sum_0 = 0;
+    for(int i = 0; i <  c0wo.size(); ++i)
+    {
+        ++sum_1;
+        ++sum_0;
+    }
+    float none_woe = log( ((float)(tot1- sum_1)/tot1) / ((float)(tot0-sum_0)/tot0));
+    cout<< log ((float)(tot1- sum_1)/tot1)/ ((float)(tot0-sum_0)/tot0)<<endl;
+    return none_woe;
+}

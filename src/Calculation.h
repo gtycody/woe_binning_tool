@@ -23,6 +23,9 @@ class Calculation
         float range;
         float max;
 
+        float none_swap;
+        float none_woe;
+
         float max_float;
         float min_float;
 
@@ -34,9 +37,8 @@ class Calculation
 
     public:
         //Constructor
-        Calculation(int seg, vector<vector<float> > input);
-
-    
+        Calculation(int seg, vector<vector<float> > input, bool contain_none);
+ 
         //get the total count of 0/1
         int totCount0();
         int totCount1();
@@ -62,8 +64,12 @@ class Calculation
         //change the value in a
         void swap_value(vector<float> woe_table, vector<float> cuts, float max);
         
-	//Destructor
+	    //Destructor
         ~Calculation(){};
+
+        //Calculate woe for none value
+        float woe_for_none();
+
 
 };
 #endif
