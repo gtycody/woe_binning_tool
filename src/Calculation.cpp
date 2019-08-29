@@ -33,7 +33,6 @@ Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none
         c1wo = getCount1(segments,cuts);
         woe_table = calWoe(c0wo,c1wo,tot1,tot0);
         none_woe = woe_for_none();
-
      
     }
     else
@@ -45,7 +44,6 @@ Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none
         c0wo = getCount0(segments,cuts);
         c1wo = getCount1(segments,cuts);
         woe_table = calWoe(c0wo,c1wo,tot1,tot0);
-
     }    
     swap_value(woe_table, cuts, rangeV[0]);
     printAll();
@@ -55,19 +53,17 @@ Calculation::Calculation(int seg,vector<vector<float> > input, bool contain_none
 
 //Calculation::~Calculation(){}
 
-
-
-
 //get 0 count
 vector<int> Calculation::getCount0(int segments, vector<float> cuts)
 {
     vector<int> count0wo; 
     cuts.push_back(numeric_limits<int>::max());    
-
-    for(int i = 0; i < segments; ++i)
+    
+    for(int i = 0; i < segments; ++i) //initialize the list
     {  
         count0wo.push_back(0);
     }
+    
     for(int j = 0; j< a.size()-1; ++j)
     {
         for(int k = 0; k < segments; ++k)
@@ -242,3 +238,5 @@ float Calculation::woe_for_none()
     cout<< log ((float)(tot1- sum_1)/tot1)/ ((float)(tot0-sum_0)/tot0)<<endl;
     return none_woe;
 }
+
+
