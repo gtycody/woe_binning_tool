@@ -54,7 +54,7 @@ def _woe_calculation(data_input, cut_num, cut_method):
             gn += vcls[2 * i]
             bn += vcls[2 * i + 1]     
             woe_value_ls.append(woe_value)
-                    
+                   
         #calculate woe value for nan category
         tmp_name = list(value_count.index)
         for i in range(int(len(vcls) / 2)):
@@ -86,28 +86,28 @@ def _woe_calculation(data_input, cut_num, cut_method):
             data_input[target_col_name] = pd.qcut(data_input[target_col_name],cut_num)
         elif cut_method == "cut":
             data_input[target_col_name] = pd.cut(data_input[target_col_name],cut_num)
-
+            
         temp_df = data_input
         
         value_count = temp_df.groupby(by = [target_col_name,'tag'])
         value_count = value_count.size()
         
         tag_count = pd.value_counts(temp_df['tag'])
-
+         
         # convert value_count to list vcls
         vcls = list(value_count)
-
+         
         for i in tag_count.index:
             if i == 0:
                 tgn = tag_count[i]
             elif i == 1:
                 tbn = tag_count[i]
-         
+        
         woe_value_ls = list()
         categ_name_ls = list()
         # also record total value to calculating the woe for Nan
         # gun = good user number / bun = bad user number
-
+        
         #***** if worng plz release all line & print*******
         #print(value_count)                               
         #print(tag_count)                                 
@@ -121,22 +121,22 @@ def _woe_calculation(data_input, cut_num, cut_method):
             gn += vcls[2 * i]
             bn += vcls[2 * i + 1]     
             woe_value_ls.append(woe_value)
-                    
+            
         #calculate woe value for nan category
         tmp_name = list(value_count.index)
         for i in range(int(len(vcls) / 2)):
             categ_name_ls.append(tmp_name[2 * i][0])
-
+            
         #combine two list to a dictionary which is better at changing value
         dc = dict(zip(categ_name_ls,woe_value_ls))
-
+         
         #Testify if the list contain Nan value, if so calculated it and add 
         if gn < tgn and bn < tbn:
             woe_nan = math.log10(((tgn - gn) / tgn)/((tbn - bn) / tbn ))
             #print("woe_nan: ",woe_nan)
             dc1 = {np.nan:woe_nan}
             dc.update(dc1)
-    
+            
         #apply value in
         print(dc)
         data_input[target_col_name] = data_input[target_col_name].apply(lambda x: dc[x])
